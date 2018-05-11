@@ -18,7 +18,20 @@ public class Exercice1 {
 		
 		Client[] Clients = new Client[nbrClients];
 		for(int i=0; i<Clients.length;i++)
-			Clients[i]= new Client(threadQueueArray[i],SequencerQueue);
+			Clients[i]= new Client(threadQueueArray[i],SequencerQueue,i,maxGenExtMsgs);
+		
+		Thread generatorThread = new Thread(Generator);
+		Thread sequencerThread = new Thread(Sequencer);
+		Thread[] Clientsthread = new Thread[nbrClients];
+		for(int i=0; i<Clients.length;i++)
+		{
+			Clientsthread[i]= new Thread();
+		}
+		
+		generatorThread.start();
+		sequencerThread.start();
+		for(int i=0; i<Clients.length;i++)
+			Clientsthread[i].start();
 		
 	}
 
